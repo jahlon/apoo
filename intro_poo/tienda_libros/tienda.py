@@ -60,6 +60,10 @@ class Libro:
         """
         pass
 
+    def __str__(self):
+        return f"{self.titulo}\n" + \
+                f"ISBN: {self.isbn}"
+
 
 class Transaccion:
     """
