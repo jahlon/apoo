@@ -50,3 +50,36 @@ class Menu:
                 accion()
             else:
                 print(f"{opcion} no es una opción válida.")
+
+    def registrar_libro(self):
+        print(">>> REGISTRAR LIBRO")
+        print("Ingrese la información del libro\n")
+        isbn = input("ISBN: ")
+        titulo = input("Titulo: ")
+        precio_venta = float(input("Precio de venta: "))
+        precio_compra = float(input("Precio de compra: "))
+        cantidad_actual = int(input("Cantidad actual: "))
+        self.tienda.registrar_libro(titulo, isbn, precio_venta, precio_compra, cantidad_actual)
+    
+    def eliminar_libro(self):
+        print(">>> ELIMINAR LIBRO\n")
+        
+        isbn = input("ISBN: ")
+        
+        if not self.tienda.eliminar_libro(isbn):
+            print(f"INFO: No se encontró un libro con el ISBN {isbn}.")
+        else:
+            print(f"INFO: El libro fue eliminado del catálogo.")
+    
+    def buscar_libro_por_titiulo(self):
+        print(">>> BUSCAR LIBRO POR TÍTULO\n")
+
+        titulo = input("Título: ")
+
+        libro = self.tienda.buscar_libro_por_titulo(titulo)
+        if libro is not None:
+            print(libro)
+        else:
+            print(f"No se encontró un libro con el título: {titulo}")
+        
+        
