@@ -1,4 +1,5 @@
 from datetime import datetime
+from functools import reduce
 from typing import Union
 
 
@@ -97,6 +98,18 @@ class Libro:
         transaccion = Transaccion(Transaccion.ABASTECIMIENTO, cantidad)
         self.transacciones.append(transaccion)
 
+    
+    def ejemplares_vendidos(self):
+        """
+        Retorna la cantidad de ejemplares vendidos del libro
+        """
+        if len(self.transacciones) > 0:
+            cantidades = [t.cantidad for t in self.transacciones if t.tipo == Transaccion.VENTA]
+            total = reduce(lambda x, y: x + y, cantidades)
+            return total
+        else:
+            return 0
+
     def __str__(self):
         return f"{self.titulo}\n" + \
                 f"ISBN: {self.isbn}"
@@ -165,7 +178,7 @@ class TiendaDeLibros:
         else:
             return False
 
-    def vender(self, isbn, cantidad, fecha) -> bool:
+    def vender(self, isbn, cantidad) -> bool:
         """
         Vende ejemplares de un libro dado su ISBN. Si no puede vender los ejemplares del libro,
         retorna False.
@@ -182,7 +195,7 @@ class TiendaDeLibros:
         retorna None
         """
         if len(self.catalogo) > 0:
-            return max(self.catalogo, key=lambda x: x.precio_venta)
+            return max(self.catalogo.values(), key=lambda x: x.precio_venta)
         else:
             return None
 
@@ -192,7 +205,7 @@ class TiendaDeLibros:
         retorna None.
         """
         if len(self.catalogo) > 0:
-            return min(self.catalogo, key=lambda x: x.precio_venta)
+            return min(self.catalogo.values(), key=lambda x: x.precio_venta)
         else:
             return None
 
@@ -201,5 +214,8 @@ class TiendaDeLibros:
         Retorna el libro del cual se han vendido más ejemplares. Si no hay libros en el
         catálogo retorna None.
         """
-        pass
+        if len(self.catalogo) > 0:
+            return max (self.catalogo.values(), key=lambda x: x.ejemplares_vendidos())
+        else:
+            return None
 
