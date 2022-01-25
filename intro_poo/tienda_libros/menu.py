@@ -112,7 +112,7 @@ class Menu:
         isbn = input("ISBN: ")
         cantidad = int(input("Cantida de ejemplares: "))
 
-        if self.tienda.abastecer(isbn, cantidad):
+        if self.tienda.vender(isbn, cantidad):
             print("INFO: La venta se registró adecuadamente")
         else:
             print(f"INFO: No existe un libro con el ISBN {isbn}, por lo cual no se pudo registrar la venta")
@@ -147,7 +147,6 @@ class Menu:
     def salir(self):
         print("\nGRACIAS POR USAR LA APLICACIÓN")
         sys.exit(0)
-
 
 
 if __name__ == "__main__":
